@@ -36,7 +36,7 @@
 - FastAPI  
 - SQLAlchemy  
 - Alembic (Database migrations)  
-- PostgreSQL (or other SQL database)  
+- MySQL
 - Pydantic  
 - JWT Authentication  
 
