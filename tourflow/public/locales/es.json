@@ -1,0 +1,142 @@
+{
+  "header": {
+    "destinations": "Destinos",
+    "experiences": "Experiencias",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "profile": "Perfil",
+    "myBookings": "Mis Reservas",
+    "dashboard": "Panel de Control",
+    "logout": "Cerrar Sesión"
+  },
+  "footer": {
+    "description": "Tu puerta de entrada a aventuras inolvidables en todo el mundo.",
+    "explore": "Explorar",
+    "destinations": "Destinos",
+    "experiences": "Experiencias",
+    "travelGuides": "Guías de Viaje",
+    "specialOffers": "Ofertas Especiales",
+    "company": "Empresa",
+    "aboutUs": "Acerca de Nosotros",
+    "careers": "Carreras",
+    "press": "Prensa",
+    "contact": "Contacto",
+    "support": "Soporte",
+    "helpCenter": "Centro de Ayuda",
+    "safetyInformation": "Información de Seguridad",
+    "cancellationOptions": "Opciones de Cancelación",
+    "termsConditions": "Términos y Condiciones",
+      "allRightsReserved": "Todos los derechos reservados."
+  },
+  "auth": {
+    "login": {
+      "title": "Bienvenido de nuevo",
+      "subtitle": "Inicia sesión para acceder a tus reservas, guardar destinos favoritos y planear tu próximo viaje.",
+      "signUpLink": "Crea una cuenta gratis",
+      "emailLabel": "Correo electrónico",
+      "emailPlaceholder": "Introduce tu correo electrónico",
+      "emailRequired": "El correo electrónico es obligatorio.",
+      "emailInvalid": "Por favor, introduce un correo electrónico válido.",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "Introduce tu contraseña",
+      "passwordRequired": "La contraseña es obligatoria.",
+      "passwordMinLength": "La contraseña debe tener al menos 8 caracteres.",
+      "rememberMe": "Mantener sesión iniciada",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "signIn": "Iniciar sesión",
+      "success": "Has iniciado sesión correctamente. ¡Bienvenido de nuevo!",
+      "error": "No pudimos iniciar tu sesión. Revisa tus datos e inténtalo de nuevo."
+    },
+    "register": {
+      "title": "Crea tu cuenta",
+      "subtitle": "Únete a nuestra comunidad de viajeros en solo unos pasos.",
+      "signInLink": "¿Ya tienes una cuenta? Inicia sesión",
+      "nameLabel": "Nombre completo",
+      "namePlaceholder": "Introduce tu nombre completo",
+      "nameRequired": "El nombre completo es obligatorio.",
+      "usernameLabel": "Nombre de usuario",
+      "usernamePlaceholder": "Elige un nombre de usuario",
+      "usernameRequired": "El nombre de usuario es obligatorio.",
+      "usernameMinLength": "El nombre de usuario debe tener al menos 3 caracteres.",
+      "emailLabel": "Correo electrónico",
+      "emailPlaceholder": "Introduce tu correo electrónico",
+      "emailRequired": "El correo electrónico es obligatorio.",
+      "emailInvalid": "Por favor, introduce un correo electrónico válido.",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "Crea una contraseña",
+      "passwordRequired": "La contraseña es obligatoria.",
+      "passwordMinLength": "La contraseña debe tener al menos 8 caracteres.",
+      "confirmPasswordLabel": "Confirmar contraseña",
+      "confirmPasswordPlaceholder": "Vuelve a introducir tu contraseña",
+      "confirmPasswordRequired": "Por favor, confirma tu contraseña.",
+      "passwordsDoNotMatch": "Las contraseñas no coinciden.",
+      "agreeToTerms": "Acepto los",
+      "termsAndConditions": "Términos y Condiciones",
+      "signUp": "Registrarse",
+      "success": "Tu cuenta ha sido creada correctamente. ¡Bienvenido!",
+      "error": "No pudimos crear tu cuenta. Por favor, inténtalo de nuevo."
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Descubre Tu Próxima Aventura",
+      "subtitle": "Explora destinos impresionantes, crea recuerdos inolvidables y experimenta el mundo como nunca antes"
+    },
+    "search": {
+      "destination": "¿A dónde?",
+      "date": "¿Cuándo?",
+      "travelers": "Viajeros",
+      "button": "Buscar"
+    },
+    "destinations": {
+      "title": "Destinos Destacados",
+      "subtitle": "Destinos seleccionados que ofrecen experiencias únicas y recuerdos inolvidables",
+      "reviews": "reseñas",
+      "viewAll": "Ver Todos los Destinos"
+    },
+    "experiences": {
+      "title": "Experiencias Populares",
+      "subtitle": "Sumérgete en actividades únicas curadas por expertos locales"
+    },
+    "testimonials": {
+      "title": "Lo Que Dicen los Viajeros",
+      "subtitle": "Experiencias reales de aventureros reales que han explorado con WanderHub",
+      "review1": "¡WanderHub hizo que planificar mi viaje a Japón fuera muy fácil! Las recomendaciones fueron perfectas, y las experiencias que reservé fueron absolutamente increíbles.",
+      "review2": "El sistema de reservas es perfecto, y me encanta la función de chat en tiempo real que me ayudó a conectar con guías locales. ¡Mi viaje a Bali fue inolvidable!",
+      "review3": "He usado varias plataformas de viajes, pero WanderHub se destaca por su interfaz fácil de usar y experiencias auténticas."
+    },
+    "newsletter": {
+      "title": "Mantente Actualizado con Ofertas de Viaje",
+      "subtitle": "Suscríbete a nuestro boletín y obtén acceso exclusivo a ofertas especiales, consejos de viaje y guías de destinos",
+      "placeholder": "Tu dirección de correo electrónico",
+      "subscribe": "Suscribirse"
+    }
+  },
+  "categories": {
+    "adventure": "Aventura",
+    "beach": "Playa",
+    "cultural": "Cultural",
+    "eco-tourism": "Ecoturismo",
+    "food-and-drink": "Comida y Bebida",
+    "historical": "Histórico",
+    "mountain": "Montaña",
+    "nature": "Naturaleza",
+    "nightlife": "Vida Nocturna",
+    "romantic": "Romántico",
+    "urban": "Urbano",
+    "wellness": "Bienestar"
+  },
+  "common": {
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo más tarde.",
+    "perPerson": "por persona"
+  },
+  "weather": {
+    "currentIn": "Clima actual en {{location}}",
+    "feelsLike": "Sensación térmica",
+    "humidity": "Humedad",
+    "wind": "Viento",
+    "unavailable": "Información meteorológica no disponible"
+  }
+}

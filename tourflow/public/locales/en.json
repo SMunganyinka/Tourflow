@@ -1,0 +1,142 @@
+{
+  "header": {
+    "destinations": "Destinations",
+    "experiences": "Experiences",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Sign In",
+    "register": "Register",
+    "profile": "Profile",
+    "myBookings": "My Bookings",
+    "dashboard": "Dashboard",
+    "logout": "Logout"
+  },
+  "footer": {
+    "description": "Your gateway to unforgettable adventures around the world.",
+    "explore": "Explore",
+    "destinations": "Destinations",
+    "experiences": "Experiences",
+    "travelGuides": "Travel Guides",
+    "specialOffers": "Special Offers",
+    "company": "Company",
+    "aboutUs": "About Us",
+    "careers": "Careers",
+    "press": "Press",
+    "contact": "Contact",
+    "support": "Support",
+    "helpCenter": "Help Center",
+    "safetyInformation": "Safety Information",
+    "cancellationOptions": "Cancellation Options",
+    "termsConditions": "Terms & Conditions",
+      "allRightsReserved": "All rights reserved."
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to access your bookings, save favorite destinations, and plan your next trip.",
+      "signUpLink": "Create a free account",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "Enter your email",
+      "emailRequired": "Email is required.",
+      "emailInvalid": "Please enter a valid email address.",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "passwordRequired": "Password is required.",
+      "passwordMinLength": "Password must be at least 8 characters.",
+      "rememberMe": "Keep me signed in",
+      "forgotPassword": "Forgot your password?",
+      "signIn": "Sign in",
+      "success": "You’ve successfully signed in. Welcome back!",
+      "error": "We couldn’t sign you in. Please check your details and try again."
+    },
+    "register": {
+      "title": "Create your account",
+      "subtitle": "Join our travel community in a few quick steps.",
+      "signInLink": "Already have an account? Sign in",
+      "nameLabel": "Full name",
+      "namePlaceholder": "Enter your full name",
+      "nameRequired": "Full name is required.",
+      "usernameLabel": "Username",
+      "usernamePlaceholder": "Choose a username",
+      "usernameRequired": "Username is required.",
+      "usernameMinLength": "Username must be at least 3 characters.",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "Enter your email",
+      "emailRequired": "Email is required.",
+      "emailInvalid": "Please enter a valid email address.",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Create a password",
+      "passwordRequired": "Password is required.",
+      "passwordMinLength": "Password must be at least 8 characters.",
+      "confirmPasswordLabel": "Confirm password",
+      "confirmPasswordPlaceholder": "Re-enter your password",
+      "confirmPasswordRequired": "Please confirm your password.",
+      "passwordsDoNotMatch": "Passwords do not match.",
+      "agreeToTerms": "I agree to the",
+      "termsAndConditions": "Terms & Conditions",
+      "signUp": "Sign up",
+      "success": "Your account has been created successfully. Welcome aboard!",
+      "error": "We couldn’t create your account. Please try again."
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Discover Your Next Adventure",
+      "subtitle": "Explore breathtaking destinations, create unforgettable memories, and experience the world like never before"
+    },
+    "search": {
+      "destination": "Where to?",
+      "date": "When?",
+      "travelers": "Travelers",
+      "button": "Search"
+    },
+    "destinations": {
+      "title": "Featured Destinations",
+      "subtitle": "Handpicked destinations that offer unique experiences and unforgettable memories",
+      "reviews": "reviews",
+      "viewAll": "View All Destinations"
+    },
+    "experiences": {
+      "title": "Popular Experiences",
+      "subtitle": "Immerse yourself in unique activities curated by local experts"
+    },
+    "testimonials": {
+      "title": "What Travelers Say",
+      "subtitle": "Real experiences from real adventurers who have explored with WanderHub",
+      "review1": "WanderHub made planning my trip to Japan so easy! The recommendations were spot on, and the experiences I booked were absolutely incredible.",
+      "review2": "The booking system is seamless, and I love the real-time chat feature that helped me connect with local guides. My trip to Bali was unforgettable!",
+      "review3": "I've used several travel platforms, but WanderHub stands out with its user-friendly interface and authentic experiences."
+    },
+    "newsletter": {
+      "title": "Stay Updated with Travel Deals",
+      "subtitle": "Subscribe to our newsletter and get exclusive access to special offers, travel tips, and destination guides",
+      "placeholder": "Your email address",
+      "subscribe": "Subscribe"
+    }
+  },
+  "categories": {
+    "adventure": "Adventure",
+    "beach": "Beach",
+    "cultural": "Cultural",
+    "eco-tourism": "Eco-Tourism",
+    "food-and-drink": "Food & Drink",
+    "historical": "Historical",
+    "mountain": "Mountain",
+    "nature": "Nature",
+    "nightlife": "Nightlife",
+    "romantic": "Romantic",
+    "urban": "Urban",
+    "wellness": "Wellness"
+  },
+  "common": {
+    "error": "Something went wrong. Please try again later.",
+    "perPerson": "per person"
+  },
+  "weather": {
+    "currentIn": "Current weather in {{location}}",
+    "feelsLike": "Feels like",
+    "humidity": "Humidity",
+    "wind": "Wind",
+    "unavailable": "Weather information unavailable"
+  }
+}
