@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, Float, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, Float, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from datetime import datetime
 
@@ -16,9 +16,12 @@ class Destination(Base):
     price = Column(Float)
     image_url = Column(String(500))  # Added length
     rating = Column(Float, default=0.0)
+    is_active = Column(Boolean, default=True, index=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     operator_id = Column(Integer, ForeignKey("users.id"))
     
     operator = relationship("User")
     bookings = relationship("Booking", back_populates="destination")
     reviews = relationship("Review", back_populates="destination")
+    operator_id = Column(Integer, ForeignKey("users.id"))  # Links to the 'users' table
+    operator = relationship("User", back_populates="destinations")  # Creates the relationship

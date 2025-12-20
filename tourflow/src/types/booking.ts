@@ -65,7 +65,8 @@ export interface BookingFormData {
   destination_id: number;
   travel_date: string;
   end_date?: string;
-  number_of_people: number;
-  travelers: Traveler[];
+   number_of_travelers: number;
   special_requests?: string;
+  contact_email: string;      
+  contact_phone: string;    
 }

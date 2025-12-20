@@ -28,11 +28,11 @@ const BookingForm: React.FC = () => {
   } = useForm<BookingFormData>({
     defaultValues: {
       destination_id: id ? Number(id) : 0,
-      number_of_people: 1,
+      number_of_travelers: 1,
     },
   });
 
-  const numberOfPeople = watch('number_of_people');
+  const numberOfPeople = watch('number_of_travelers');
   const travelDate = watch('travel_date');
 
   const today = new Date().toISOString().split('T')[0];
@@ -74,40 +74,29 @@ const BookingForm: React.FC = () => {
     setShowConfirmation(true);
   };
   
-  const confirmBooking = async () => {
+
+const confirmBooking = async () => {
     if (!destination) return;
     
     setIsSubmitting(true);
     try {
       const data = getValues();
       
-      // Create the travelers array to match the BookingFormData type
-      const travelers = [
-        {
-          // Use the logged-in user's info for the first traveler
-          first_name: user?.username || 'Guest',
-          last_name: user?.full_name || 'User',
-          email: user?.email,
-          // Add other required fields for a traveler if your backend needs them
-        },
-        // Add placeholder travelers if number_of_people > 1
-        ...Array.from({ length: data.number_of_people - 1 }, (_, i) => ({
-          first_name: `Traveler ${i + 2}`,
-          last_name: 'Last Name',
-        })),
-      ];
-
-      // --- FIX: Removed unused 'response' variable ---
-      await bookingsAPI.createBooking({
-        destination_id: destination.id,
-        number_of_people: data.number_of_people,
+      // Create the payload that matches the backend schema
+      const payloadForAPI = {
+        destination_id: data.destination_id,
         travel_date: data.travel_date,
+        number_of_travelers: data.number_of_travelers,
+        total_price: destination.price * data.number_of_travelers,
         special_requests: data.special_requests,
-        travelers: travelers,
-      });
+        contact_email: user?.email || '', // Get from logged-in user
+        // Use a fallback for the phone number in case it's not on the user object
+        contact_phone: user?.phone || '', 
+      };
+      
+      await bookingsAPI.createBooking(payloadForAPI);
       
       toast.success('Booking created successfully!');
-      // Navigate to the bookings list page instead of the payment page
       navigate('/my-bookings');
     } catch (error) {
       console.error('Failed to create booking:', error);
@@ -217,16 +206,16 @@ const BookingForm: React.FC = () => {
             </label>
             <input
               type="number"
-              id="number_of_people"
+              id="number_of_travelers"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              {...register('number_of_people', { 
+              {...register('number_of_travelers', { 
                 required: 'Number of people is required',
                 min: { value: 1, message: 'At least 1 person is required' },
                 max: { value: 20, message: 'Maximum 20 people allowed' }
               })}
             />
-            {errors.number_of_people && (
-              <p className="mt-1 text-sm text-red-600">{errors.number_of_people.message}</p>
+            {errors.number_of_travelers && (
+              <p className="mt-1 text-sm text-red-600">{errors.number_of_travelers.message}</p>
             )}
           </div>
           

@@ -18,7 +18,7 @@ const Footer: React.FC = () => {
   const { t } = useTranslation();
   const [showBackToTop, setShowBackToTop] = useState(false);
   
-  // Handle scroll for back-to-top button
+  
   React.useEffect(() => {
     const handleScroll = () => {
       setShowBackToTop(window.scrollY > 300);
@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
               <div className="space-y-3 mb-6">
                 <div className="flex items-center space-x-3 text-gray-300">
                   <FaMapMarkerAlt className="text-primary-400" />
-                  <span>KN27, Norrsken, Kigali city, Rwanda</span>
+                  <span>KN27, Norrsken, Kigali City, Rwanda</span>
                 </div>
                 <div className="flex items-center space-x-3 text-gray-300">
                   <FaPhone className="text-primary-400" />

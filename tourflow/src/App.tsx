@@ -21,8 +21,10 @@ import PaymentForm from './features/payments/PaymentForm';
 import MyBookings from './features/bookings/MyBookings';
 import AdminDashboard from './features/admin/AdminDashboard';
 import AdminLogin from './features/auth/AdminLogin'; 
+import Experiences from  './pages/ExperiencesPage'
 
 import NotFoundPage from './pages/NotFoundPage';
+import AboutPage from './pages/AboutPage';
 
 // Utility Components
 import ProtectedRoute from './components/common/ProtectedRoute';
@@ -32,7 +34,7 @@ import LoadingSpinner from './components/common/LoadingSpinner';
 // Context
 import { AuthProvider, useAuthContext } from './features/auth/AuthContext';
 import { LanguageProvider } from './features/auth/LanguageContext';
-import { UserRole } from './types/auth';
+
 
 // React Query client
 const queryClient = new QueryClient({
@@ -63,6 +65,8 @@ const AppRoutes: React.FC = () => {
         <Routes>
           {/* Public Pages */}
           <Route path="/" element={<HomePage />} />
+           <Route path="/about" element={<AboutPage />} />
+           <Route path="/experiences" element={<Experiences />} />
           <Route path="/destinations" element={<DestinationList />} />
           <Route path="/destinations/:id" element={<DestinationDetail />} />
 
@@ -131,19 +135,12 @@ const AppRoutes: React.FC = () => {
           />
 
           {/* Admin-only Routes */}
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute
-                isAuthenticated={isAuthenticated}
-                isLoading={isLoading}
-                requiredRole={UserRole.ADMIN}
-                userRole={user?.role}
-              >
-                <AdminDashboard />
-              </ProtectedRoute>
-            }
-          />
+      <Route
+    path="/dashboard"
+    element={
+      isAuthenticated ? <AdminDashboard /> : <Navigate to="/dashboard" replace />
+    }
+/>
 
           {/* Redirects */}
           <Route path="/home" element={<Navigate to="/" replace />} />

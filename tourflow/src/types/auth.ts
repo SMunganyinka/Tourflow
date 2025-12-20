@@ -11,7 +11,8 @@ export interface User {
   created_at: string;
   updated_at: string;
   last_login?: string;
-   is_admin: boolean;
+  is_admin: boolean;
+  phone?: string; 
 }
 
 export enum UserRole {
@@ -38,7 +39,7 @@ export interface RegisterRequest {
 export interface AuthResponse {
   access_token: string;
   token_type: string;
-  user: User;
+  user: User | null;
 }
 
 export interface UserProfile extends User {

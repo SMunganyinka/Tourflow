@@ -56,7 +56,7 @@ const MyBookings = () => {
               {bookings.map((booking: BookingWithDestination) => (
                 <tr key={booking.id} className="bg-white border-b hover:bg-gray-50">
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                    {booking.destination.title}
+                    {booking.destination ? booking.destination.title : `Destination ID: ${booking.destination_id}`}
                   </th>
                   <td className="px-6 py-4">
                     {new Date(booking.travel_date).toLocaleDateString()}

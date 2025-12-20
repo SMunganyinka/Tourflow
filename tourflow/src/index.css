@@ -38,3 +38,18 @@ body {
 .animation-delay-600 {
   animation-delay: 600ms;
 }
+/* Add this at the bottom of your CSS file */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out;
+}

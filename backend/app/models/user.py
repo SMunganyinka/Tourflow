@@ -23,3 +23,4 @@ class User(Base):
     
     bookings = relationship("Booking", back_populates="user")
     reviews = relationship("Review", back_populates="user")
+    destinations = relationship("Destination", back_populates="operator")  

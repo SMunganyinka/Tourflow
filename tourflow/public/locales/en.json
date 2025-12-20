@@ -28,7 +28,7 @@
     "safetyInformation": "Safety Information",
     "cancellationOptions": "Cancellation Options",
     "termsConditions": "Terms & Conditions",
-      "allRightsReserved": "All rights reserved."
+    "allRightsReserved": "All rights reserved."
   },
   "auth": {
     "login": {
@@ -46,8 +46,8 @@
       "rememberMe": "Keep me signed in",
       "forgotPassword": "Forgot your password?",
       "signIn": "Sign in",
-      "success": "You’ve successfully signed in. Welcome back!",
-      "error": "We couldn’t sign you in. Please check your details and try again."
+      "success": "You've successfully signed in. Welcome back!",
+      "error": "We couldn't sign you in. Please check Your Details and try again."
     },
     "register": {
       "title": "Create your account",
@@ -76,7 +76,7 @@
       "termsAndConditions": "Terms & Conditions",
       "signUp": "Sign up",
       "success": "Your account has been created successfully. Welcome aboard!",
-      "error": "We couldn’t create your account. Please try again."
+      "error": "We couldn't create your account. Please try again."
     }
   },
   "home": {
@@ -118,8 +118,8 @@
     "adventure": "Adventure",
     "beach": "Beach",
     "cultural": "Cultural",
-    "eco-tourism": "Eco-Tourism",
-    "food-and-drink": "Food & Drink",
+    "ecoTourism": "Eco-Tourism",
+    "foodAndDrink": "Food & Drink",
     "historical": "Historical",
     "mountain": "Mountain",
     "nature": "Nature",
@@ -128,9 +128,82 @@
     "urban": "Urban",
     "wellness": "Wellness"
   },
+  "dashboard": {
+    "title": "Admin Dashboard",
+    "totalBookings": "Total Bookings",
+    "totalRevenue": "Total Revenue",
+    "totalUsers": "Total Users",
+    "totalDestinations": "Total Destinations",
+    "tabs": {
+      "overview": "Overview",
+      "bookings": "Bookings",
+      "destinations": "Destinations",
+      "users": "Users"
+    },
+    "recentBookings": "Recent Bookings",
+    "topDestinations": "Top Destinations",
+    "viewAllBookings": "View All Bookings",
+    "viewAllDestinations": "View All Destinations",
+    "destinationsCount": "Total: {{count}} destinations",
+    "addDestination": "Add Destination",
+    "usersCount": "Total: {{count}} users",
+    "addUser": "Add User",
+    "usersPlaceholder": "User management functionality will be available soon."
+  },
+  "booking": {
+    "reference": "Reference",
+    "destination": "Destination",
+    "date": "Date",
+    "amount": "Amount",
+    "status": "Status",
+    "view": "View"
+  },
+  "destination": {
+    "title": "Title",
+    "location": "Location",
+    "price": "Price",
+    "rating": "Rating",
+    "status": "Status",
+    "edit": "Edit",
+    "view": "View",
+    "active": "Active",
+    "inactive": "Inactive"
+  },
   "common": {
     "error": "Something went wrong. Please try again later.",
-    "perPerson": "per person"
+    "perPerson": "per person",
+    "loading": "Loading...",
+    "noData": "No data available",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "next": "Next",
+    "previous": "Previous",
+    "first": "First",
+    "last": "Last",
+    "close": "Close",
+    "open": "Open",
+    "yes": "Yes",
+    "no": "No",
+    "submit": "Submit",
+    "reset": "Reset",
+    "clear": "Clear",
+    "back": "Back",
+    "continue": "Continue",
+    "refresh": "Refresh",
+    "download": "Download",
+    "upload": "Upload",
+    "settings": "Settings",
+    "profile": "Profile",
+    "logout": "Logout",
+    "login": "Login",
+    "register": "Register"
   },
   "weather": {
     "currentIn": "Current weather in {{location}}",

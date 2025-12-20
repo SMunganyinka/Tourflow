@@ -1,55 +1,44 @@
 # app/schemas/booking.py
 
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from datetime import datetime
-from typing import Optional, List
+from typing import Optional
 
-# --- 1. DEFINE THE DESTINATION SCHEMA ---
-# First, we need a schema for the destination data.
-# This will be nested inside our booking response.
-class Destination(BaseModel):
-    id: int
-    title: str
-    location: str
-    price: float
-    # Add any other destination fields you want to include in the API response
-
-    class Config:
-        from_attributes = True
-
-
-# --- 2. DEFINE THE BOOKING SCHEMAS ---
-
-# Base schema with common attributes
+# This is a base schema with common fields for creating or updating a booking
 class BookingBase(BaseModel):
     destination_id: int
     travel_date: datetime
-    number_of_people: int
-    special_requests: Optional[str] = None # Assuming this field exists
+    number_of_travelers: int
+    special_requests: Optional[str] = None
+    contact_email: EmailStr
+    contact_phone: Optional[str] = None
 
-# Schema for creating a new booking (inherits from BookingBase)
+# Schema for creating a new booking.
+# It inherits from BookingBase. The user will provide this data.
 class BookingCreate(BookingBase):
-    travelers: List[dict] # Assuming travelers are sent as a list of dicts
+    pass
 
-# Schema for updating a booking (e.g., changing status)
+# Schema for updating an existing booking.
+# All fields are optional to allow for partial updates.
 class BookingUpdate(BaseModel):
-    status: Optional[str] = None
+    travel_date: Optional[datetime] = None
+    number_of_travelers: Optional[int] = None
+    special_requests: Optional[str] = None
+    contact_email: Optional[EmailStr] = None
+    contact_phone: Optional[str] = None
+    status: Optional[str] = None # Often status is updated separately, but can be here too.
 
-# --- 3. UPDATE THE MAIN BOOKING RESPONSE SCHEMA ---
-# Schema for returning booking data in API responses
-# This now includes the nested destination object.
-class Booking(BookingBase):
+# Schema for returning booking data in an API response.
+# It includes all fields from the database model, like the ID and status.
+class BookingResponse(BookingBase):
     id: int
     user_id: int
+    booking_reference: str
     booking_date: datetime
     total_price: float
     status: str
-    payment_id: Optional[str] = None
-    
-    # --- KEY CHANGE ---
-    # Add the nested destination object to the response schema
-    destination: Destination
 
-    # This configuration allows Pydantic to read data from ORM objects
+    # This special configuration tells Pydantic to read data from ORM objects,
+    # which allows you to pass a SQLAlchemy model instance directly.
     class Config:
         from_attributes = True

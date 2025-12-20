@@ -9,31 +9,48 @@ interface AdminLoginRequest extends LoginRequest {
 
 export const authService = {
   login: async (credentials: AdminLoginRequest): Promise<AuthResponse> => {
-    // If this is an admin login, add a special header or modify the endpoint
-    const headers = credentials.isAdmin ? { 'X-Admin-Login': 'true' } : {};
-    
-    const response = await api.post('/auth/login', credentials, { headers });
-    localStorage.setItem('token', response.data.access_token);
-    
-    // If this is an admin login, ensure the response includes the admin role
-    if (credentials.isAdmin && response.data.user.role !== 'admin') {
-      response.data.user.role = 'admin';
+    try {
+      // If this is an admin login, add a special header
+      const headers = credentials.isAdmin ? { 'X-Admin-Login': 'true' } : {};
+      
+      const response = await api.post('/auth/login', credentials, { headers });
+      
+      // Store the token with consistent key
+      if (response.data.access_token) {
+        localStorage.setItem('token', response.data.access_token);
+      }
+      
+      // Create a proper AuthResponse object
+      const authResponse: AuthResponse = {
+        access_token: response.data.access_token,
+        token_type: response.data.token_type,
+        user: null 
+      };
+      
+      return authResponse;
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
     }
-    
-    return response.data;
   },
 
   register: async (userData: RegisterRequest): Promise<AuthResponse> => {
     const response = await api.post('/auth/register', userData);
-    localStorage.setItem('token', response.data.access_token);
+    if (response.data.access_token) {
+      localStorage.setItem('token', response.data.access_token);
+    }
     return response.data;
   },
 
   getCurrentUser: async (): Promise<User | null> => {
     try {
+      const token = localStorage.getItem('token');
+      if (!token) return null;
+      
       const response = await api.get('/auth/me');
       return response.data;
     } catch (error) {
+      console.error('Error fetching current user:', error);
       localStorage.removeItem('token');
       return null;
     }
@@ -48,7 +65,6 @@ export const authService = {
     }
   },
   
-  // Add this method to check if user is authenticated
   isAuthenticated: (): boolean => {
     return !!localStorage.getItem('token');
   }

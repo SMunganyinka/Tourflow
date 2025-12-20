@@ -13,6 +13,18 @@ export const bookingsAPI = {
     // Use a relative path here as well
     api.post('/bookings/', bookingData),
 
-  updateBookingStatus: (id: number, status: string) =>
-    api.put(`/bookings/${id}/status`, { status }),
+  // Update the booking status to match backend endpoints
+  confirmBooking: (id: number) =>
+    api.post(`/bookings/${id}/confirm`),
+
+  cancelBooking: (id: number) =>
+    api.post(`/bookings/${id}/cancel`),
+
+  // General update for booking details (not status)
+  updateBooking: (id: number, bookingData: Partial<BookingFormData>) =>
+    api.put(`/bookings/${id}`, bookingData),
+
+  // Get a specific booking
+  getBooking: (id: number) =>
+    api.get(`/bookings/${id}`),
 };

@@ -31,9 +31,11 @@ const AdminLogin: React.FC = () => {
 const onSubmit = async (data: AdminLoginForm) => {
   try {
     const response = await login({ ...data, isAdmin: true });
+     console.log('Login response:', response); // Add this line
     
-    // Check if the user object has is_admin set to true
-    if (response && response.user && response.user.is_admin) {
+    
+    // Check if login was successful (token exists)
+    if (response && response.access_token) {
       toast.success('Admin login successful');
       navigate('/dashboard', { replace: true });
     } else {
@@ -41,6 +43,7 @@ const onSubmit = async (data: AdminLoginForm) => {
       setLoginAttempts(prev => prev + 1);
     }
   } catch (error: any) {
+     console.error('Login error:', error); // Add this line
     setLoginAttempts(prev => prev + 1);
     
     if (loginAttempts >= 2) {

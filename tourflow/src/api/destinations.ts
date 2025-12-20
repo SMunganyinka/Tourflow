@@ -1,3 +1,5 @@
+// src/api/destinations.ts
+
 import type { Destination } from '../types';
 import api from '../services/api';
 
@@ -16,8 +18,9 @@ export const destinationsAPI = {
       min_rating: filters.minRating,
     };
 
-    return api.get<Destination[]>('/destinations', { params });
+    // FIX: Add the trailing slash to match the backend route
+    return api.get<Destination[]>('/destinations/', { params }); 
   },
 
-  getDestinationById: (id: number) => api.get<Destination>(`/destinations/${id}`),
+  getDestinationById: (id: number) => api.get<Destination>(`/destinations/${id}/`),
 };

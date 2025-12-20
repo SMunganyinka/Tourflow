@@ -1,232 +1,65 @@
 // src/features/admin/AdminDashboard.tsx
-import React, { useState, useEffect } from 'react';
+
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaChartBar, FaUsers, FaMapMarkedAlt, FaDollarSign, FaStar } from 'react-icons/fa';
-import type { DashboardStats, Booking, Destination} from '../../types';
-import { BookingStatus, PaymentStatus, DestinationCategory } from '../../types'; // Import the enums
+import type { Booking } from '../../types';
 import { formatCurrency, formatDate } from '../../utils/helpers';
-import {Card,  CardContent, CardHeader } from '../../components/ui/Card';
+import { Card, CardContent, CardHeader } from '../../components/ui/Card';
 import Button from '../../components/common/Button';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import { useQuery } from '@tanstack/react-query';
+import { operatorAPI } from '../../services/operatorAPI';
 
 const AdminDashboard: React.FC = () => {
   const { t } = useTranslation();
-  const [stats, setStats] = useState<DashboardStats | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'overview' | 'bookings' | 'destinations' | 'users'>('overview');
 
-  // Mock data for demonstration
-   const mockStats: DashboardStats = {
-    total_bookings: 1247,
-    total_revenue: 1578923,
-    total_users: 3542,
-    total_destinations: 48,
-    recent_bookings: [
-      {
-        id: 1, // Added missing id
-        destination_id: 1,
-        booking_reference: 'WH-2023-001',
-        user_id: 1,
-        destination: {
-          id: 1,
-          title: 'Bali Adventure',
-          slug: 'bali-adventure',
-          description: 'Experience beauty of Bali',
-          location: 'Bali, Indonesia',
-          coordinates: { latitude: -8.3405, longitude: 115.0920 },
-          price: 1299,
-          currency: 'USD',
-          images: [],
-          featured_image: 'https://picsum.photos/seed/bali/400/300.jpg',
-          rating: 4.8,
-          review_count: 124,
-          category: DestinationCategory.ADVENTURE,
-          tags: [],
-          amenities: [],
-          availability: [],
-          operator_id: 1,
-          is_featured: true,
-          is_active: true,
-          created_at: '2023-01-01',
-          updated_at: '2023-01-01',
-          included_items: ['Accommodation', 'Daily breakfast', 'Airport transfers'],
-          excluded_items: ['Lunch and dinner', 'Personal expenses'],
-          cancellation_policy: { // Use the CancellationPolicy interface
-            id: 1,
-            name: 'Flexible',
-            description: 'Free cancellation up to 7 days before travel',
-            full_refund_days: 7,
-            partial_refund_days: 3,
-            partial_refund_percentage: 50
-          },
-        },
-        booking_date: '2023-05-15',
-        travel_date: '2023-06-20',
-        end_date: '2023-06-25',
-        number_of_people: 2,
-        travelers: [
-          { first_name: 'John', last_name: 'Doe', email: 'john@example.com' },
-          { first_name: 'Jane', last_name: 'Doe', email: 'jane@example.com' }
-        ],
-        total_price: 2598,
-        currency: 'USD',
-        status: BookingStatus.CONFIRMED, // Use the enum value
-        payment_status: PaymentStatus.COMPLETED, // Use the enum value
-        created_at: '2023-05-15',
-        updated_at: '2023-05-15'
-      },
-      {
-        id: 2,
-        booking_reference: 'WH-2023-002',
-        user_id: 2,
-        destination_id: 2,
-        destination: {
-          id: 2,
-          title: 'Paris Getaway',
-          slug: 'paris-getaway',
-          description: 'Romantic trip to city of lights',
-          location: 'Paris, France',
-          coordinates: { latitude: 48.8566, longitude: 2.3522 },
-          price: 1899,
-          currency: 'USD',
-          images: [],
-          featured_image: 'https://picsum.photos/seed/paris/400/300.jpg',
-          rating: 4.9,
-          review_count: 203,
-          category: DestinationCategory.ROMANTIC, // Use the enum value
-          tags: [],
-          amenities: [],
-          availability: [],
-          operator_id: 2,
-          is_featured: true,
-          is_active: true,
-          created_at: '2023-01-01',
-          updated_at: '2023-01-01',
-          included_items: ['Hotel accommodation', 'City tour', 'Museum passes'],
-          excluded_items: ['Airfare', 'Travel insurance'],
-          cancellation_policy: { // Use the CancellationPolicy interface
-            id: 2,
-            name: 'Moderate',
-            description: '50% refund if cancelled 14 days before travel',
-            full_refund_days: 14,
-            partial_refund_days: 7,
-            partial_refund_percentage: 50
-          },
-        },
-        booking_date: '2023-04-10',
-        travel_date: '2023-08-15',
-        end_date: '2023-08-20',
-        number_of_people: 2,
-        travelers: [
-          { first_name: 'Michael', last_name: 'Smith', email: 'michael@example.com' },
-          { first_name: 'Sarah', last_name: 'Smith', email: 'sarah@example.com' }
-        ],
-        total_price: 3798,
-        currency: 'USD',
-        status: BookingStatus.PENDING, // Use the enum value
-        payment_status: PaymentStatus.PENDING, // Use the enum value
-        created_at: '2023-04-10',
-        updated_at: '2023-04-10'
-      }
-    ],
-    top_destinations: [
-      {
-        id: 1, // Changed from id
-        title: 'Bali Adventure',
-        slug: 'bali-adventure',
-        description: 'Experience beauty of Bali',
-        location: 'Bali, Indonesia',
-        coordinates: { latitude: -8.3405, longitude: 115.0920 },
-        price: 1299,
-        currency: 'USD',
-        images: [],
-        featured_image: 'https://picsum.photos/seed/bali/400/300.jpg',
-        rating: 4.8,
-        review_count: 124,
-        category: DestinationCategory.ADVENTURE, // Use the enum value
-        tags: [],
-        amenities: [],
-        availability: [],
-        operator_id: 1,
-        is_featured: true,
-        is_active: true,
-        created_at: '2023-01-01',
-        updated_at: '2023-01-01',
-        included_items: ['Accommodation', 'Daily breakfast', 'Airport transfers'],
-        excluded_items: ['Lunch and dinner', 'Personal expenses'],
-        cancellation_policy: { // Use the CancellationPolicy interface
-          id: 1,
-          name: 'Flexible',
-          description: 'Free cancellation up to 7 days before travel',
-          full_refund_days: 7,
-          partial_refund_days: 3,
-          partial_refund_percentage: 50
-        },
-      },
-      {
-        id: 2, // Changed from id
-        title: 'Paris Getaway',
-        slug: 'paris-getaway',
-        description: 'Romantic trip to city of lights',
-        location: 'Paris, France',
-        coordinates: { latitude: 48.8566, longitude: 2.3522 },
-        price: 1899,
-        currency: 'USD',
-        images: [],
-        featured_image: 'https://picsum.photos/seed/paris/400/300.jpg',
-        rating: 4.9,
-        review_count: 203,
-        category: DestinationCategory.ROMANTIC, // Use the enum value
-        tags: [],
-        amenities: [],
-        availability: [],
-        operator_id: 2,
-        is_featured: true,
-        is_active: true,
-        created_at: '2023-01-01',
-        updated_at: '2023-01-01',
-        included_items: ['Hotel accommodation', 'City tour', 'Museum passes'],
-        excluded_items: ['Airfare', 'Travel insurance'],
-        cancellation_policy: { // Use the CancellationPolicy interface
-          id: 2,
-          name: 'Moderate',
-          description: '50% refund if cancelled 14 days before travel',
-          full_refund_days: 14,
-          partial_refund_days: 7,
-          partial_refund_percentage: 50
-        },
-      }
-    ],
-    monthly_revenue: [
-      { month: 'Jan', revenue: 120000, bookings: 85 },
-      { month: 'Feb', revenue: 135000, bookings: 92 },
-      { month: 'Mar', revenue: 155000, bookings: 108 },
-      { month: 'Apr', revenue: 142000, bookings: 95 },
-      { month: 'May', revenue: 178000, bookings: 121 },
-      { month: 'Jun', revenue: 195000, bookings: 132 }
-    ]
-  };
+  // Fetch real data from API
+  const { data: stats, isLoading, error } = useQuery({
+    queryKey: ['dashboard-stats'],
+    queryFn: () => operatorAPI.getDashboardStats(),
+  });
 
-  useEffect(() => { // Changed from useState to useEffect
-    // Simulate API call
-    setTimeout(() => {
-      setStats(mockStats);
-      setIsLoading(false);
-    }, 1000);
-  }, []); // Added empty dependency array
+  const { data: bookings } = useQuery({
+    queryKey: ['bookings'],
+    queryFn: () => operatorAPI.getBookings(),
+  });
+
+  const { data: destinations } = useQuery({
+    queryKey: ['destinations'],
+    queryFn: () => operatorAPI.getDestinations(),
+  });
 
   if (isLoading) {
     return <LoadingSpinner />;
   }
 
-  if (!stats) {
-    return <div>Error loading dashboard data</div>;
+  if (error) {
+    return (
+      <div className="container py-8">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-8 text-center">
+          <h2 className="text-2xl font-bold text-red-800 mb-4">
+            {t('common.error')}
+          </h2>
+          <p className="text-red-600 mb-4">
+            {error.message || 'Failed to load dashboard data'}
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-md"
+          >
+            {t('common.refresh')}
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="container py-8">
       <h1 className="text-2xl font-bold text-gray-800 mb-6">
-        {t('admin.dashboard.title')}
+        {t('dashboard.title')}
       </h1>
 
       {/* Stats Cards */}
@@ -239,10 +72,10 @@ const AdminDashboard: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-600">
-                  {t('admin.dashboard.totalBookings')}
+                  {t('dashboard.totalBookings')}
                 </p>
                 <p className="text-2xl font-bold text-gray-800">
-                  {stats.total_bookings.toLocaleString()}
+                  {stats?.total_bookings?.toLocaleString() || '0'}
                 </p>
               </div>
             </div>
@@ -257,10 +90,10 @@ const AdminDashboard: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-600">
-                  {t('admin.dashboard.totalRevenue')}
+                  {t('dashboard.totalRevenue')}
                 </p>
                 <p className="text-2xl font-bold text-gray-800">
-                  {formatCurrency(stats.total_revenue)}
+                  {formatCurrency(stats?.total_revenue || 0)}
                 </p>
               </div>
             </div>
@@ -275,10 +108,10 @@ const AdminDashboard: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-600">
-                  {t('admin.dashboard.totalUsers')}
+                  {t('dashboard.totalUsers')}
                 </p>
                 <p className="text-2xl font-bold text-gray-800">
-                  {stats.total_users.toLocaleString()}
+                  {stats?.total_users?.toLocaleString() || '0'}
                 </p>
               </div>
             </div>
@@ -293,10 +126,10 @@ const AdminDashboard: React.FC = () => {
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-600">
-                  {t('admin.dashboard.totalDestinations')}
+                  {t('dashboard.totalDestinations')}
                 </p>
                 <p className="text-2xl font-bold text-gray-800">
-                  {stats.total_destinations}
+                  {stats?.total_destinations || 0}
                 </p>
               </div>
             </div>
@@ -315,7 +148,7 @@ const AdminDashboard: React.FC = () => {
             }`}
             onClick={() => setActiveTab('overview')}
           >
-            {t('admin.dashboard.tabs.overview')}
+            {t('dashboard.tabs.overview')}
           </button>
           <button
             className={`py-2 px-1 border-b-2 font-medium text-sm ${
@@ -325,7 +158,7 @@ const AdminDashboard: React.FC = () => {
             }`}
             onClick={() => setActiveTab('bookings')}
           >
-            {t('admin.dashboard.tabs.bookings')}
+            {t('dashboard.tabs.bookings')}
           </button>
           <button
             className={`py-2 px-1 border-b-2 font-medium text-sm ${
@@ -335,7 +168,7 @@ const AdminDashboard: React.FC = () => {
             }`}
             onClick={() => setActiveTab('destinations')}
           >
-            {t('admin.dashboard.tabs.destinations')}
+            {t('dashboard.tabs.destinations')}
           </button>
           <button
             className={`py-2 px-1 border-b-2 font-medium text-sm ${
@@ -345,7 +178,7 @@ const AdminDashboard: React.FC = () => {
             }`}
             onClick={() => setActiveTab('users')}
           >
-            {t('admin.dashboard.tabs.users')}
+            {t('dashboard.tabs.users')}
           </button>
         </nav>
       </div>
@@ -353,87 +186,9 @@ const AdminDashboard: React.FC = () => {
       {/* Tab Content */}
       <div>
         {activeTab === 'overview' && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Recent Bookings */}
-            <Card>
-              <CardHeader>
-                <h3 className="text-lg font-semibold text-gray-800">
-                  {t('admin.dashboard.recentBookings')}
-                </h3>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {stats.recent_bookings.map((booking: Booking) => (
-                    <div key={booking.id} className="flex items-center justify-between pb-4 border-b border-gray-200 last:border-0">
-                      <div>
-                        <p className="font-medium text-gray-800">
-                          {booking.destination?.title}
-                        </p>
-                        <p className="text-sm text-gray-600">
-                          {booking.booking_reference} • {formatDate(booking.booking_date)}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-medium text-gray-800">
-                          {formatCurrency(booking.total_price)}
-                        </p>
-                        <span className={`inline-block px-2 py-1 text-xs font-semibold rounded-full ${
-                          booking.status === BookingStatus.CONFIRMED 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-yellow-100 text-yellow-800'
-                        }`}>
-                          {booking.status}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-4 text-center">
-                  <Button variant="outline" size="sm">
-                    {t('admin.dashboard.viewAllBookings')}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Top Destinations */}
-            <Card>
-              <CardHeader>
-                <h3 className="text-lg font-semibold text-gray-800">
-                  {t('admin.dashboard.topDestinations')}
-                </h3>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {stats.top_destinations.map((destination: Destination, index: number) => (
-                    <div key={destination.id} className="flex items-center pb-4 border-b border-gray-200 last:border-0">
-                      <div className="flex-shrink-0 w-8 h-8 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center font-medium text-sm mr-3">
-                        {index + 1}
-                      </div>
-                      <div className="flex-grow">
-                        <p className="font-medium text-gray-800">
-                          {destination.title}
-                        </p>
-                        <div className="flex items-center text-sm text-gray-600">
-                          <FaStar className="text-yellow-400 mr-1" />
-                          <span>{destination.rating} ({destination.review_count} reviews)</span>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-medium text-gray-800">
-                          {formatCurrency(destination.price)}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-4 text-center">
-                  <Button variant="outline" size="sm">
-                    {t('admin.dashboard.viewAllDestinations')}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+          <div className="text-center py-8">
+            <h2 className="text-xl font-semibold mb-4">{t('dashboard.tabs.overview')}</h2>
+            <p>Dashboard overview with real API data</p>
           </div>
         )}
 
@@ -441,7 +196,7 @@ const AdminDashboard: React.FC = () => {
           <Card>
             <CardHeader>
               <h3 className="text-lg font-semibold text-gray-800">
-                {t('admin.dashboard.bookings')}
+                {t('admin.dashboard.recentBookings')}
               </h3>
             </CardHeader>
             <CardContent>
@@ -470,7 +225,7 @@ const AdminDashboard: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {stats.recent_bookings.map((booking: Booking) => (
+                    {bookings?.map((booking: Booking) => (
                       <tr key={booking.id}>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           {booking.booking_reference}
@@ -486,7 +241,9 @@ const AdminDashboard: React.FC = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                            booking.status === BookingStatus.CONFIRMED 
+                            // Fix: Compare with string value after converting to lowercase
+                            // or use the correct status value based on your BookingStatus type
+                            booking.status?.toString().toLowerCase() === 'confirmed' 
                               ? 'bg-green-100 text-green-800' 
                               : 'bg-yellow-100 text-yellow-800'
                           }`}>
@@ -511,18 +268,10 @@ const AdminDashboard: React.FC = () => {
           <Card>
             <CardHeader>
               <h3 className="text-lg font-semibold text-gray-800">
-                {t('admin.dashboard.destinations')}
+                {t('admin.dashboard.topDestinations')}
               </h3>
             </CardHeader>
             <CardContent>
-              <div className="flex justify-between items-center mb-4">
-                <p className="text-gray-600">
-                  {t('admin.dashboard.destinationsCount', { count: stats.total_destinations })}
-                </p>
-                <Button>
-                  {t('admin.dashboard.addDestination')}
-                </Button>
-              </div>
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
@@ -548,7 +297,7 @@ const AdminDashboard: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {stats.top_destinations.map((destination: Destination) => (
+                    {destinations?.map((destination) => (
                       <tr key={destination.id}>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           {destination.title}
@@ -599,14 +348,6 @@ const AdminDashboard: React.FC = () => {
               </h3>
             </CardHeader>
             <CardContent>
-              <div className="flex justify-between items-center mb-4">
-                <p className="text-gray-600">
-                  {t('admin.dashboard.usersCount', { count: stats.total_users })}
-                </p>
-                <Button>
-                  {t('admin.dashboard.addUser')}
-                </Button>
-              </div>
               <div className="text-center py-8 text-gray-500">
                 {t('admin.dashboard.usersPlaceholder')}
               </div>

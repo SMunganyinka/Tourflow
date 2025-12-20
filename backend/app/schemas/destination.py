@@ -1,41 +1,46 @@
 # app/schemas/destination.py
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict
 from typing import Optional
-from datetime import datetime
 
-# Base schema with common attributes
+# --- Base Schema ---
+# Contains fields common to all destination schemas
 class DestinationBase(BaseModel):
-    title: str = Field(..., min_length=1, max_length=200)
-    description: str
+    title: str
+    description: Optional[str] = None
     location: str
-    latitude: float
-    longitude: float
-    price: float = Field(..., gt=0)
+    price: float
     image_url: Optional[str] = None
+    rating: float
 
-# Schema for creating a new destination (inherits from DestinationBase)
+# --- Request Schemas ---
+
+# Schema for creating a new destination
 class DestinationCreate(DestinationBase):
-    pass
+    is_active: bool = True
 
-# Schema for updating a destination (all fields are optional)
+# Schema for updating an existing destination (all fields are optional)
 class DestinationUpdate(BaseModel):
-    title: Optional[str] = Field(None, min_length=1, max_length=200)
+    title: Optional[str] = None
     description: Optional[str] = None
     location: Optional[str] = None
-    latitude: Optional[float] = None
-    longitude: Optional[float] = None
-    price: Optional[float] = Field(None, gt=0)
+    price: Optional[float] = None
     image_url: Optional[str] = None
+    rating: Optional[float] = None
+    is_active: Optional[bool] = None
 
-# Schema for returning destination data in API responses
-# Includes all fields from the database model
-class Destination(DestinationBase):
+# --- Response Schema ---
+
+# This is the schema your admin endpoint is trying to import.
+# It defines how destination data is returned in API responses.
+class DestinationResponse(DestinationBase):
     id: int
-    rating: float
-    created_at: datetime
-    operator_id: int
+    is_active: bool
 
-    # This configuration allows Pydantic to read data from ORM objects
-    class Config:
-        from_attributes = True
+    # This configuration allows Pydantic to read data from ORM objects (like SQLAlchemy models)
+    # Use this for Pydantic v2
+    model_config = ConfigDict(from_attributes=True)
+
+    # Use this for Pydantic v1 instead
+    # class Config:
+    #     orm_mode = True
