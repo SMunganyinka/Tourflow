@@ -18,7 +18,7 @@ app = FastAPI(
 # This allows your frontend (running on a different port) to communicate with the backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Your Vite dev server
+    allow_origins=["http://localhost:5173", "https://sweet-concha-204191.netlify.app"],  # Your Vite dev server
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
